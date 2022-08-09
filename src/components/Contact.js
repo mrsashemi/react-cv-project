@@ -22,7 +22,7 @@ export class ContactForm extends Component {
                     <input onChange={this.props.handleChange} value={jobSeeker.email} name="email" type="email" id="emailInput" placeholder='Email' /><br></br>
                     <textarea onChange={this.props.handleChange} value={jobSeeker.objective} name="objective" id="objectiveInput" placeholder='Objective Statement' rows="4" maxLength="50" /><br></br>
                     <input onChange={this.props.handleKeywords} value={keyword.text} type="text" id="keywordInput" placeholder='Keywords' /><br></br>
-                    <button onClick={this.props.addKeyword} >Add Keyword</button><br></br>
+                    <button onClick={this.props.addKeyword} type="button" >Add Keyword</button><br></br>
                     <br></br><button type="submit">Submit Personal Info</button>
                 </form>
             </div>

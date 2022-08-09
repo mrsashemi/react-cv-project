@@ -32,5 +32,8 @@
   grid-area: Education;
 }
 
+.hidden {
+  display: none;
+}
 
 

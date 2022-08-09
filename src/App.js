@@ -42,6 +42,8 @@ class App extends Component {
     };
   }
 
+  hidden = React.createRef();
+
   handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -53,6 +55,7 @@ class App extends Component {
   };
 
   handleExp = (e) => {
+    this.hidden.current.className = "active";
     const { name, value } = e.target;
 
     this.setState(prevState => ({
@@ -61,6 +64,8 @@ class App extends Component {
   };
 
   handleKeywords = (e) => {
+
+
     this.setState({
       keyword: {
           text: e.target.value,
@@ -98,6 +103,7 @@ class App extends Component {
 
   onSubmitExp = (e) => {
     e.preventDefault();
+    this.hidden.current.className = "hidden";
     this.setState({
       experiences: this.state.experiences.concat(this.state.experience),
       experience: {
@@ -127,6 +133,7 @@ class App extends Component {
   }
 
   addBullet = (e) => {
+    this.hidden.current.className = "active";
     this.setState(prevState => ({
       experience: {
         ...prevState.experience,
@@ -169,7 +176,11 @@ class App extends Component {
           <ContactInfo jobSeeker={jobSeeker} keywords={keywords}  />
           <div className='experienceInfo'>
             <h2>Experience</h2>
-            <ExperienceInfo experiences={experiences} />
+            <ExperienceInfo 
+              experiences={experiences} 
+              experience={experience} 
+              hidden={this.hidden}
+            />
           </div>
           <div className='educationInfo'>
             <h2>Education</h2>

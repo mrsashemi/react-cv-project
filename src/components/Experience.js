@@ -18,7 +18,7 @@ export class ExperienceForm extends Component {
                     <input onChange={this.props.handleExp} value={experience.start} name="start"  type="text" id="startDateInput" placeholder='Start Date' /><br></br>
                     <input onChange={this.props.handleExp} value={experience.end} name="end" type="text" id="endDateInput" placeholder='End Date' /><br></br>
                     <input onChange={this.props.handleBullets} value={experience.bullet.text}  type="text" id="describeDutiesInput" placeholder='Description Point' /><br></br>
-                    <button onClick={this.props.addBullet}>Add Bullet Point</button>
+                    <button onClick={this.props.addBullet} type="button" >Add Bullet Point</button><br></br>
                     <br></br><button type="submit">Add Experience</button>
                 </form>
             </div>
@@ -33,21 +33,33 @@ export class ExperienceInfo extends Component {
     }
 
     render() {
-        const { experiences  } = this.props;
+        const { experiences, experience } = this.props;
 
         return (
             <div className='experiencePoint'>
+                <div className="hidden" ref={this.props.hidden}>
+                    <h3>{experience.position}</h3>
+                    <h4>{experience.company} in {experience.city}</h4>
+                    <h5>{experience.start} to {experience.end}</h5>
+                    <ul>
+                        {experience.bullets.map((bullet) => {
+                            return <li key={bullet.id}>{bullet.text}</li>
+                        })}
+                    </ul>
+                </div>
                 {experiences.map((experience) => {
-                    <div>
-                        <h3>{experience.position}</h3>
-                        <h4>{experience.company} in {experience.city}</h4>
-                        <h5>{experience.start} to {experience.end}</h5>
-                        <ul>
-                            {experience.bullets.map((bullet) => {
-                                return <li key={bullet.id}>{bullet.text}</li>
-                            })}
-                        </ul>
-                    </div>
+                    return (
+                        <div key={experience.id}>
+                            <h3>{experience.position}</h3>
+                            <h4>{experience.company} in {experience.city}</h4>
+                            <h5>{experience.start} to {experience.end}</h5>
+                            <ul>
+                                {experience.bullets.map((bullet) => {
+                                    return <li key={bullet.id}>{bullet.text}</li>
+                                })}
+                            </ul>
+                        </div>
+                    );
                 })}
             </div>
         );
