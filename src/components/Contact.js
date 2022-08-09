@@ -9,7 +9,7 @@ export class ContactForm extends Component {
     }
 
     render() {
-        const { jobSeeker, keyword } = this.props;
+        const { jobSeeker, keyword, contactText } = this.props;
 
         return (
             <div>
@@ -23,7 +23,7 @@ export class ContactForm extends Component {
                     <textarea onChange={this.props.handleChange} value={jobSeeker.objective} name="objective" id="objectiveInput" placeholder='Objective Statement' rows="4" maxLength="50" /><br></br>
                     <input onChange={this.props.handleKeywords} value={keyword.text} type="text" id="keywordInput" placeholder='Keywords' /><br></br>
                     <button onClick={this.props.addKeyword} type="button" >Add Keyword</button><br></br>
-                    <br></br><button type="submit">Submit Personal Info</button>
+                    <br></br><button type="submit">{contactText}</button>
                 </form>
             </div>
         );

@@ -12,6 +12,7 @@ class App extends Component {
 
     this.state = {
       onChange: true,
+      contactText: "Submit Personal Info",
       jobSeeker: {
         firstName: '',
         lastName: '',
@@ -88,17 +89,23 @@ class App extends Component {
 
   onSubmitContact = (e) => {
     e.preventDefault();
-    this.setState({
-      jobSeeker: {
-        firstName: this.state.jobSeeker.firstName,
-        lastName: this.state.jobSeeker.lastName,
-        address: this.state.jobSeeker.address,
-        phone: this.state.jobSeeker.phone,
-        email: this.state.jobSeeker.email,
-        objective: this.state.jobSeeker.objective,
-      },
-    });
-    this.state.onChange = false;
+    if (this.state.onChange) {
+      this.setState({
+        jobSeeker: {
+          firstName: this.state.jobSeeker.firstName,
+          lastName: this.state.jobSeeker.lastName,
+          address: this.state.jobSeeker.address,
+          phone: this.state.jobSeeker.phone,
+          email: this.state.jobSeeker.email,
+          objective: this.state.jobSeeker.objective,
+        },
+      });
+      this.state.onChange = false;
+      this.state.contactText = "Edit Info"
+    } else if (!this.state.onChange) {
+      this.state.contactText = "Submit Personal Info"
+      this.state.onChange = true;
+    }
   };
 
   onSubmitExp = (e) => {
@@ -148,7 +155,7 @@ class App extends Component {
 
 
   render() {
-    const { jobSeeker, keyword, keywords, experiences, experience } = this.state;
+    const { jobSeeker, keyword, keywords, experiences, experience, contactText } = this.state;
 
     return (
       <div className='container'>
@@ -161,6 +168,7 @@ class App extends Component {
               addKeyword={this.addKeyword} 
               jobSeeker={jobSeeker} 
               keyword={keyword}
+              contactText={contactText}
             />
             <ExperienceForm 
               handleExp={this.handleExp} 
