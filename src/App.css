@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20vmin;
+}
+
+.generatedCV {
+  width: 21cm;
+  height: 29.7cm;
+  border: solid 0.2vmin black;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas: 
+  "Personal Experience Experience"
+  "Personal Experience Experience"
+  "Personal Experience Experience"
+  "Personal Experience Experience"
+  "Personal Education Education"
+  "Personal Education Education";
+}
+
+.personalInfo {
+  grid-area: Personal;
+}
+
+.experienceInfo {
+  grid-area: Experience;
+}
+
+.educationInfo {
+  grid-area: Education;
+}
+
+
+
