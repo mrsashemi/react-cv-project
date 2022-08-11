@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { Component } from 'react';
 import { ExperienceForm, ExperienceInfo } from './components/Experience';
-import EducationForm from './components/Education';
+import { EducationForm, EducationInfo } from './components/Education';
 import { ContactForm, ContactInfo } from './components/Contact';
 import uniqid from "uniqid";
 
@@ -40,10 +39,22 @@ class App extends Component {
         bullets: []
       },
       experiences: [],
+      education: {
+        college: '',
+        collegeCity: '',
+        degree: '',
+        major: '',
+        minor: '',
+        collegeStart: '',
+        collegeEnd: '',
+        id: uniqid()
+      },
+      educations: []
     };
   }
 
   hidden = React.createRef();
+  hiddenEdu = React.createRef();
 
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,9 +75,16 @@ class App extends Component {
     }));
   };
 
+  handleEdu = (e) => {
+    this.hiddenEdu.current.className = "active";
+    const { name, value } = e.target;
+
+    this.setState(prevState => ({
+      education: {...prevState.education, [name]: value},
+    }));
+  }
+
   handleKeywords = (e) => {
-
-
     this.setState({
       keyword: {
           text: e.target.value,
@@ -129,6 +147,24 @@ class App extends Component {
     });
   };
 
+  onSubmitEdu = (e) => {
+    e.preventDefault();
+    this.hiddenEdu.current.className = "hidden";
+    this.setState({
+      educations: this.state.educations.concat(this.state.education),
+      education: {
+        college: '',
+        collegeCity: '',
+        degree: '',
+        major: '',
+        minor: '',
+        collegeStart: '',
+        collegeEnd: '',
+        id: uniqid()
+      },
+    });
+  };
+
   addKeyword = (e) => {
     this.setState({
       keywords: this.state.keywords.concat(this.state.keyword),
@@ -137,7 +173,7 @@ class App extends Component {
           id: uniqid()
       },
     });
-  }
+  };
 
   addBullet = (e) => {
     this.hidden.current.className = "active";
@@ -151,11 +187,11 @@ class App extends Component {
         }
       }
     }));
-  }
+  };
 
 
   render() {
-    const { jobSeeker, keyword, keywords, experiences, experience, contactText } = this.state;
+    const { jobSeeker, keyword, keywords, experiences, experience, contactText, education, educations } = this.state;
 
     return (
       <div className='container'>
@@ -177,7 +213,11 @@ class App extends Component {
               onSubmitExp={this.onSubmitExp}
               experience={experience} 
             />
-            <EducationForm />
+            <EducationForm
+              handleEdu={this.handleEdu}
+              onSubmitEdu={this.onSubmitEdu}
+              education={education}
+            />
           </div>
         </div>
         <div className='generatedCV'>
@@ -192,11 +232,11 @@ class App extends Component {
           </div>
           <div className='educationInfo'>
             <h2>Education</h2>
-            <div className='educationPoint'>
-              <h3>Degree Received</h3>
-              <h4>University Name and City</h4>
-              <h5>Start Date to End Date</h5>
-            </div>
+            <EducationInfo 
+              education={education}
+              educations={educations}
+              hiddenEdu={this.hiddenEdu}
+            />
           </div>
         </div>
       </div>

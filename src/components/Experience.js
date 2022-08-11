@@ -12,7 +12,7 @@ export class ExperienceForm extends Component {
             <div>
                 <form onSubmit={this.props.onSubmitExp}>
                     <br></br><label htmlFor="experienceInput">Experience: </label><br></br>
-                    <input onChange={this.props.handleExp} value={experience.position} name="position"  type="text" id="positionInput" placeholder='Position' /><br></br>
+                    <input onChange={this.props.handleExp} defaultValue={experience.position} name="position"  type="text" id="positionInput" placeholder='Position' /><br></br>
                     <input onChange={this.props.handleExp} value={experience.company} name="company"  type="text" id="companyInput" placeholder='Company' /><br></br>
                     <input onChange={this.props.handleExp} value={experience.city} name="city"  type="text" id="cityInput" placeholder='City' /><br></br>
                     <input onChange={this.props.handleExp} value={experience.start} name="start"  type="text" id="startDateInput" placeholder='Start Date' /><br></br>
