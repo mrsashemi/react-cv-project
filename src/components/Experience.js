@@ -38,9 +38,8 @@ export class ExperienceInfo extends Component {
         return (
             <div className='experiencePoint'>
                 <div className="hidden" ref={this.props.hidden}>
-                    <h3>{experience.position}</h3>
-                    <h4>{experience.company} in {experience.city}</h4>
-                    <h5>{experience.start} to {experience.end}</h5>
+                    <h4>{experience.company} / {experience.position}</h4>
+                    <h6>{experience.start} - {experience.end}, {experience.city}</h6>
                     <ul>
                         {experience.bullets.map((bullet) => {
                             return <li key={bullet.id}>{bullet.text}</li>
@@ -50,9 +49,8 @@ export class ExperienceInfo extends Component {
                 {experiences.map((experience) => {
                     return (
                         <div key={experience.id}>
-                            <h3>{experience.position}</h3>
-                            <h4>{experience.company} in {experience.city}</h4>
-                            <h5>{experience.start} to {experience.end}</h5>
+                            <h4>{experience.company} / {experience.position}</h4>
+                            <h6>{experience.start} - {experience.end}, {experience.city}</h6>
                             <ul>
                                 {experience.bullets.map((bullet) => {
                                     return <li key={bullet.id}>{bullet.text}</li>

@@ -5,6 +5,7 @@
 }
 
 .generatedCV {
+  padding: 0.5cm;
   width: 21cm;
   height: 29.7cm;
   border: solid 0.2vmin black;
@@ -12,12 +13,12 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   grid-template-areas: 
-  "Personal Experience Experience"
-  "Personal Experience Experience"
-  "Personal Experience Experience"
-  "Personal Experience Experience"
-  "Personal Education Education"
-  "Personal Education Education";
+  "Personal Experience Experience Experience"
+  "Personal Experience Experience Experience"
+  "Personal Experience Experience Experience"
+  "Personal Experience Experience Experience"
+  "Personal Education Education Education"
+  "Personal Education Education Education";
 }
 
 .personalInfo {
@@ -36,4 +37,33 @@
   display: none;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding-left: 0.5cm;
+}
+
+li {
+  margin: 0;
+  font-size: 11px;
+}
+
+.objective,
+.experiencePoint > div,
+.educationPoint > div {
+  margin: 0.25cm 0 0.25cm 0;
+}
+
+.educationInfo,
+.experienceInfo {
+  margin-left: 0.5cm;
+}
 

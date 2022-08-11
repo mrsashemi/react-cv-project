@@ -19,6 +19,8 @@ export class EducationForm extends Component {
                     <input onChange={this.props.handleEdu} value={education.minor} name="minor" type="text" id="minorInput" placeholder='Minor' /><br></br>
                     <input onChange={this.props.handleEdu} value={education.collegeStart} name="collegeStart" type="text" id="collegeStartInput" placeholder='Start Date' /><br></br>
                     <input onChange={this.props.handleEdu} value={education.collegeEnd} name="collegeEnd" type="text" id="collegeEndInput" placeholder='End Date' /><br></br>
+                    <input onChange={this.props.handleEduNotes} value={education.note.text}  type="text" id="notableClasses" placeholder='Class or Accolade' /><br></br>
+                    <button onClick={this.props.addEduNote} type="button" >Add Notable Achievements</button><br></br>
                     <br></br><button type="submit">Add Education</button>
                 </form>
             </div>
@@ -38,16 +40,28 @@ export class EducationInfo extends Component {
         return (
             <div className='educationPoint'>
                 <div className="hidden" ref={this.props.hiddenEdu}>
-                    <h3>{education.degree} in {education.major} {education.minor !== '' && <h3>with minors in {education.minor}</h3>}</h3>
+                    <h3>{education.degree} in {education.major}</h3>
+                    {education.minor !== '' && <h4>with minors in {education.minor}</h4>}
                     <h4>{education.college} in {education.collegeCity}</h4>
                     <h5>{education.collegeStart} to {education.collegeEnd}</h5>
+                    <ul>
+                        {education.notes.map((note) => {
+                            return <li key={note.id}>{note.text}</li>
+                        })}
+                    </ul>
                 </div>
                 {educations.map((education) => {
                     return (
                         <div key={education.id}>
-                            <h3>{education.degree} in {education.major} {education.minor !== '' && <h3>with minors in {education.minor}</h3>}</h3>
+                            <h3>{education.degree} in {education.major} </h3> 
+                            {education.minor !== '' && <h4>with minors in {education.minor}</h4>}
                             <h4>{education.college} in {education.collegeCity}</h4>
                             <h5>{education.collegeStart} to {education.collegeEnd}</h5>
+                            <ul>
+                                {education.notes.map((note) => {
+                                    return <li key={note.id}>{note.text}</li>
+                                })}
+                            </ul>
                         </div>
                     );
                 })}

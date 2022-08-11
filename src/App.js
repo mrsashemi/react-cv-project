@@ -47,7 +47,12 @@ class App extends Component {
         minor: '',
         collegeStart: '',
         collegeEnd: '',
-        id: uniqid()
+        id: uniqid(),
+        note: {
+          text: '',
+          id: uniqid()
+        },
+        notes: []
       },
       educations: []
     };
@@ -100,6 +105,18 @@ class App extends Component {
         bullet: {
           text: e.target.value,
           id: this.state.experience.bullet.id,
+        }
+      },
+    }));
+  }
+
+  handleEduNotes = (e) => {
+    this.setState(prevState => ({
+      education: {
+        ...prevState.education, 
+        note: {
+          text: e.target.value,
+          id: this.state.education.note.id,
         }
       },
     }));
@@ -160,7 +177,12 @@ class App extends Component {
         minor: '',
         collegeStart: '',
         collegeEnd: '',
-        id: uniqid()
+        id: uniqid(),
+        note: {
+          text: '',
+          id: uniqid()
+        },
+        notes: []
       },
     });
   };
@@ -182,6 +204,20 @@ class App extends Component {
         ...prevState.experience,
         bullets: this.state.experience.bullets.concat(this.state.experience.bullet),
         bullet: {
+          text: '',
+          id: uniqid()
+        }
+      }
+    }));
+  };
+
+  addEduNote = (e) => {
+    this.hiddenEdu.current.className = "active";
+    this.setState(prevState => ({
+      education: {
+        ...prevState.education,
+        notes: this.state.education.notes.concat(this.state.education.note),
+        note: {
           text: '',
           id: uniqid()
         }
@@ -216,6 +252,8 @@ class App extends Component {
             <EducationForm
               handleEdu={this.handleEdu}
               onSubmitEdu={this.onSubmitEdu}
+              handleEduNotes={this.handleEduNotes}
+              addEduNote={this.addEduNote}
               education={education}
             />
           </div>
