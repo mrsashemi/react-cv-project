@@ -79,3 +79,23 @@ li {
 .inlineText {
   display: inline;
 }
+
+#experienceCompany,
+#experiencePosition,
+#experienceCity,
+#experienceStart,
+#experienceEnd,
+#educationCollege,
+#educationDegree,
+#educationMajor,
+#educationMinor,
+#educationStart,
+#educationEnd,
+#educationCity,
+#bulletText,
+#keywordText,
+#noteText {
+  padding: 0;
+  margin: 0;
+}
+

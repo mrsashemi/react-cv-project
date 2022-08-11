@@ -1,12 +1,16 @@
-import React, { Component } from "react";
+import React, { Children, Component } from "react";
+import { EditText, EditTextarea } from 'react-edit-text';
+import 'react-edit-text/dist/index.css';
+import uniqid from "uniqid";
 
 export class ExperienceForm extends Component {
     constructor(props) {
         super(props);
     }
 
+
     render() {
-        const { experience } = this.props;
+        const { experience, experiences } = this.props;
 
         return (
             <div>
@@ -18,8 +22,9 @@ export class ExperienceForm extends Component {
                     <input onChange={this.props.handleExp} value={experience.start} name="start"  type="text" id="startDateInput" placeholder='Start Date' /><br></br>
                     <input onChange={this.props.handleExp} value={experience.end} name="end" type="text" id="endDateInput" placeholder='End Date' /><br></br>
                     <input onChange={this.props.handleBullets} value={experience.bullet.text}  type="text" id="describeDutiesInput" placeholder='Description Point' /><br></br>
-                    <button onClick={this.props.addBullet} type="button" >Add Bullet Point</button><br></br>
-                    <br></br><button type="submit">Add Experience</button>
+                    <button onClick={this.props.addBullet} type="button">Add Bullet Point</button><br></br>
+                    <br></br><button type="submit">Add Experience</button><br></br>
+                    <button onClick={this.props.deleteExp} type="button">Delete Last Experience</button>
                 </form>
             </div>
         );
@@ -29,8 +34,8 @@ export class ExperienceForm extends Component {
 export class ExperienceInfo extends Component {
     constructor(props) {
         super(props);
-
     }
+     
 
     render() {
         const { experiences, experience } = this.props;
@@ -39,7 +44,7 @@ export class ExperienceInfo extends Component {
             <div className='experiencePoint'>
                 <div className="hidden" ref={this.props.hidden}>
                     <h4>{experience.company} / {experience.position}</h4>
-                    <h6>{experience.start} - {experience.end}, {experience.city}</h6>
+                    <h6>{experience.start} - {experience.end} / {experience.city}</h6>
                     <ul>
                         {experience.bullets.map((bullet) => {
                             return <li key={bullet.id}>{bullet.text}</li>
@@ -49,11 +54,11 @@ export class ExperienceInfo extends Component {
                 {experiences.map((experience) => {
                     return (
                         <div key={experience.id}>
-                            <h4>{experience.company} / {experience.position}</h4>
-                            <h6>{experience.start} - {experience.end}, {experience.city}</h6>
+                            <h4 className="inlineText"><EditText id="experienceCompany" defaultValue={experience.company} inline /> / <EditText id="experiencePosition" defaultValue={experience.position} inline /></h4><br></br>
+                            <h6 className="inlineText"><EditText id="experienceStart" defaultValue={experience.start} inline /> - <EditText id="experienceEnd" defaultValue={experience.end} inline /> / <EditText id="experienceCity" defaultValue={experience.city} inline /> </h6>
                             <ul>
                                 {experience.bullets.map((bullet) => {
-                                    return <li key={bullet.id}>{bullet.text}</li>
+                                    return <li key={bullet.id}><EditText id="bulletText" defaultValue={bullet.text} inline /></li>
                                 })}
                             </ul>
                         </div>

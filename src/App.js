@@ -4,6 +4,7 @@ import { ExperienceForm, ExperienceInfo } from './components/Experience';
 import { EducationForm, EducationInfo } from './components/Education';
 import { ContactForm, ContactInfo } from './components/Contact';
 import uniqid from "uniqid";
+import { EditText, EditTextarea } from 'react-edit-text';
 
 class App extends Component {
   constructor() {
@@ -61,6 +62,8 @@ class App extends Component {
   hidden = React.createRef();
   hiddenEdu = React.createRef();
 
+  
+  //Create handle functions to preview form values in the CV while typing
   handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -122,6 +125,7 @@ class App extends Component {
     }));
   }
 
+  //Create onsubmit functions to input form data into the CV
   onSubmitContact = (e) => {
     e.preventDefault();
     if (this.state.onChange) {
@@ -187,6 +191,7 @@ class App extends Component {
     });
   };
 
+  //Create add functions to add bullet points to the CV 
   addKeyword = (e) => {
     this.setState({
       keywords: this.state.keywords.concat(this.state.keyword),
@@ -225,6 +230,77 @@ class App extends Component {
     }));
   };
 
+  //Add delete functionality to remove bullet points or components from various CV sections
+  deleteKeyword = () => {
+    let keyId;
+
+    if (this.state.keywords.length > 0) keyId = this.state.keywords[this.state.keywords.length - 1].id;
+    const filterKeywords = this.state.keywords.filter(k => { return k.id != keyId })
+
+    console.log(filterKeywords)
+
+    this.setState({
+      keywords: [...filterKeywords],
+      keyword: {
+          text: '',
+          id: uniqid()
+      },
+    });
+  }
+
+  deleteExp = (e) => {
+    e.preventDefault();
+    let expId;
+
+    if (this.state.experiences.length > 0) expId = this.state.experiences[this.state.experiences.length - 1].id
+    const filterExperiences = this.state.experiences.filter(exp => { return exp.id != expId })
+
+    this.setState({
+      experiences: [...filterExperiences],
+      experience: {
+        position: '',
+        company: '',
+        city: '',
+        start: '',
+        end: '',
+        id: uniqid(),
+        bullet: {
+          text: '',
+          id: uniqid()
+        },
+        bullets: []
+      },
+    });
+  }
+
+  deleteEdu = (e) => {
+    e.preventDefault();
+    let eduId;
+
+    if (this.state.educations.length > 0) eduId = this.state.educations[this.state.educations.length - 1].id
+
+    const filterEducations = this.state.educations.filter(edu => { return edu.id != eduId })
+
+    this.setState({
+      educations: [...filterEducations],
+      education: {
+        college: '',
+        collegeCity: '',
+        degree: '',
+        major: '',
+        minor: '',
+        collegeStart: '',
+        collegeEnd: '',
+        id: uniqid(),
+        note: {
+          text: '',
+          id: uniqid()
+        },
+        notes: []
+      },
+    });
+  }
+
 
   render() {
     const { jobSeeker, keyword, keywords, experiences, experience, contactText, education, educations } = this.state;
@@ -238,6 +314,7 @@ class App extends Component {
               handleKeywords={this.handleKeywords} 
               onSubmitContact={this.onSubmitContact}
               addKeyword={this.addKeyword} 
+              deleteKeyword={this.deleteKeyword}
               jobSeeker={jobSeeker} 
               keyword={keyword}
               contactText={contactText}
@@ -247,13 +324,17 @@ class App extends Component {
               handleBullets={this.handleBullets}
               addBullet={this.addBullet}
               onSubmitExp={this.onSubmitExp}
-              experience={experience} 
+              deleteExp={this.deleteExp}
+              showBulletEdit={this.showBulletEdit}
+              experience={experience}
+              experiences={experiences} 
             />
             <EducationForm
               handleEdu={this.handleEdu}
               onSubmitEdu={this.onSubmitEdu}
               handleEduNotes={this.handleEduNotes}
               addEduNote={this.addEduNote}
+              deleteEdu={this.deleteEdu}
               education={education}
             />
           </div>
