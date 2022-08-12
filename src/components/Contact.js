@@ -1,15 +1,9 @@
 import React, { Component } from "react";
-import uniqid from "uniqid";
 import '../App.css'
-import { EditText, EditTextarea } from 'react-edit-text';
+import { EditText } from 'react-edit-text';
 //import 'react-edit-text/dist/index.css';
 
 export class ContactForm extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
     render() {
         const { jobSeeker, keyword, contactText } = this.props;
 
@@ -75,11 +69,6 @@ export class ContactForm extends Component {
 }
 
 export class ContactInfo extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
     render() {
         const { jobSeeker, keywords } = this.props;
 

@@ -1,29 +1,66 @@
-import React, { Children, Component } from "react";
-import { EditText, EditTextarea } from 'react-edit-text';
+import React, { Component } from "react";
+import { EditText } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
-import uniqid from "uniqid";
 
 export class ExperienceForm extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-
     render() {
-        const { experience, experiences } = this.props;
+        const { experience } = this.props;
 
         return (
             <div>
                 <form onSubmit={this.props.onSubmitExp}>
                     <br></br><label htmlFor="experienceInput">Experience: </label><br></br>
-                    <input onChange={this.props.handleExp} defaultValue={experience.position} name="position"  type="text" id="positionInput" placeholder='Position' /><br></br>
-                    <input onChange={this.props.handleExp} value={experience.company} name="company"  type="text" id="companyInput" placeholder='Company' /><br></br>
-                    <input onChange={this.props.handleExp} value={experience.city} name="city"  type="text" id="cityInput" placeholder='City' /><br></br>
-                    <input onChange={this.props.handleExp} value={experience.start} name="start"  type="text" id="startDateInput" placeholder='Start Date' /><br></br>
-                    <input onChange={this.props.handleExp} value={experience.end} name="end" type="text" id="endDateInput" placeholder='End Date' /><br></br>
-                    <input onChange={this.props.handleBullets} value={experience.bullet.text}  type="text" id="describeDutiesInput" placeholder='Description Point' /><br></br>
+                    <input 
+                        onChange={this.props.handleExp} 
+                        value={experience.position} 
+                        name="position"  
+                        type="text" 
+                        id="positionInput" 
+                        placeholder='Position' 
+                    /><br></br>
+                    <input 
+                        onChange={this.props.handleExp} 
+                        value={experience.company} 
+                        name="company"  
+                        type="text" 
+                        id="companyInput" 
+                        placeholder='Company' 
+                    /><br></br>
+                    <input 
+                        onChange={this.props.handleExp} 
+                        value={experience.city} 
+                        name="city"  
+                        type="text" 
+                        id="cityInput" 
+                        placeholder='City' 
+                    /><br></br>
+                    <input 
+                        onChange={this.props.handleExp} 
+                        value={experience.start} 
+                        name="start"  
+                        type="text" 
+                        id="startDateInput" 
+                        placeholder='Start Date' 
+                    /><br></br>
+                    <input 
+                        onChange={this.props.handleExp} 
+                        value={experience.end} 
+                        name="end" 
+                        type="text" 
+                        id="endDateInput" 
+                        placeholder='End Date' 
+                    /><br></br>
+                    <input 
+                        onChange={this.props.handleBullets} 
+                        value={experience.bullet.text}  
+                        type="text" 
+                        id="describeDutiesInput" 
+                        placeholder='Description Point' 
+                    /><br></br>
+
                     <button onClick={this.props.addBullet} type="button">Add Bullet Point</button><br></br>
-                    <br></br><button type="submit">Add Experience</button><br></br>
+                    <button onClick={this.props.deleteBullet} type="button">Delete Last Bullet Point</button><br></br><br></br>
+                    <button type="submit">Add Experience</button><br></br>
                     <button onClick={this.props.deleteExp} type="button">Delete Last Experience</button>
                 </form>
             </div>
@@ -32,11 +69,6 @@ export class ExperienceForm extends Component {
 }
 
 export class ExperienceInfo extends Component {
-    constructor(props) {
-        super(props);
-    }
-     
-
     render() {
         const { experiences, experience } = this.props;
 

@@ -4,14 +4,13 @@ import { ExperienceForm, ExperienceInfo } from './components/Experience';
 import { EducationForm, EducationInfo } from './components/Education';
 import { ContactForm, ContactInfo } from './components/Contact';
 import uniqid from "uniqid";
-import { EditText, EditTextarea } from 'react-edit-text';
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      onChange: true,
+      onSubmitInfo: true,
       contactText: "Submit Personal Info",
       jobSeeker: {
         firstName: '',
@@ -67,7 +66,7 @@ class App extends Component {
   handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (this.state.onChange) {
+    if (this.state.onSubmitInfo) {
       this.setState(prevState => ({
         jobSeeker: {...prevState.jobSeeker, [name]: value},
       }));
@@ -128,7 +127,7 @@ class App extends Component {
   //Create onsubmit functions to input form data into the CV
   onSubmitContact = (e) => {
     e.preventDefault();
-    if (this.state.onChange) {
+    if (this.state.onSubmitInfo) {
       this.setState({
         jobSeeker: {
           firstName: this.state.jobSeeker.firstName,
@@ -138,12 +137,22 @@ class App extends Component {
           email: this.state.jobSeeker.email,
           objective: this.state.jobSeeker.objective,
         },
+        onSubmitInfo: false,
+        contactText: "Edit Info"
       });
-      this.state.onChange = false;
-      this.state.contactText = "Edit Info"
-    } else if (!this.state.onChange) {
-      this.state.contactText = "Submit Personal Info"
-      this.state.onChange = true;
+    } else if (!this.state.onSubmitInfo) {
+      this.setState({
+        jobSeeker: {
+          firstName: this.state.jobSeeker.firstName,
+          lastName: this.state.jobSeeker.lastName,
+          address: this.state.jobSeeker.address,
+          phone: this.state.jobSeeker.phone,
+          email: this.state.jobSeeker.email,
+          objective: this.state.jobSeeker.objective,
+        },
+        onSubmitInfo: true,
+        contactText: "Submit Personal Info"
+      });
     }
   };
 
@@ -192,7 +201,7 @@ class App extends Component {
   };
 
   //Create add functions to add bullet points to the CV 
-  addKeyword = (e) => {
+  addKeyword = () => {
     this.setState({
       keywords: this.state.keywords.concat(this.state.keyword),
       keyword: {
@@ -202,7 +211,7 @@ class App extends Component {
     });
   };
 
-  addBullet = (e) => {
+  addBullet = () => {
     this.hidden.current.className = "active";
     this.setState(prevState => ({
       experience: {
@@ -216,7 +225,7 @@ class App extends Component {
     }));
   };
 
-  addEduNote = (e) => {
+  addEduNote = () => {
     this.hiddenEdu.current.className = "active";
     this.setState(prevState => ({
       education: {
@@ -235,9 +244,7 @@ class App extends Component {
     let keyId;
 
     if (this.state.keywords.length > 0) keyId = this.state.keywords[this.state.keywords.length - 1].id;
-    const filterKeywords = this.state.keywords.filter(k => { return k.id != keyId })
-
-    console.log(filterKeywords)
+    const filterKeywords = this.state.keywords.filter(k => { return k.id !== keyId });
 
     this.setState({
       keywords: [...filterKeywords],
@@ -248,12 +255,48 @@ class App extends Component {
     });
   }
 
+  deleteBullet = () => {
+    let bulletId;
+
+    if (this.state.experience.bullets.length > 0) bulletId = this.state.experience.bullets[this.state.experience.bullets.length - 1].id;
+    const filterBullets = this.state.experience.bullets.filter(b => { return b.id !== bulletId});
+
+    this.setState(prevState => ({
+      experience: {
+        ...prevState.experience,
+        bullets: [...filterBullets],
+        bullet: {
+          text: '',
+          id: uniqid()
+        }
+      }
+    }));
+  }
+
+  deleteEduNote = () => {
+    let noteId;
+
+    if (this.state.education.notes.length > 0) noteId = this.state.education.notes[this.state.education.notes.length - 1].id;
+    const filterNotes = this.state.education.notes.filter(n => { return n.id !== noteId });
+
+    this.setState(prevState => ({
+      education: {
+        ...prevState.education,
+        notes: [...filterNotes],
+        note: {
+          text: '',
+          id: uniqid()
+        }
+      }
+    }));
+  }
+
   deleteExp = (e) => {
     e.preventDefault();
     let expId;
 
     if (this.state.experiences.length > 0) expId = this.state.experiences[this.state.experiences.length - 1].id
-    const filterExperiences = this.state.experiences.filter(exp => { return exp.id != expId })
+    const filterExperiences = this.state.experiences.filter(exp => { return exp.id !== expId })
 
     this.setState({
       experiences: [...filterExperiences],
@@ -279,7 +322,7 @@ class App extends Component {
 
     if (this.state.educations.length > 0) eduId = this.state.educations[this.state.educations.length - 1].id
 
-    const filterEducations = this.state.educations.filter(edu => { return edu.id != eduId })
+    const filterEducations = this.state.educations.filter(edu => { return edu.id !== eduId })
 
     this.setState({
       educations: [...filterEducations],
@@ -323,6 +366,7 @@ class App extends Component {
               handleExp={this.handleExp} 
               handleBullets={this.handleBullets}
               addBullet={this.addBullet}
+              deleteBullet={this.deleteBullet}
               onSubmitExp={this.onSubmitExp}
               deleteExp={this.deleteExp}
               showBulletEdit={this.showBulletEdit}
@@ -334,6 +378,7 @@ class App extends Component {
               onSubmitEdu={this.onSubmitEdu}
               handleEduNotes={this.handleEduNotes}
               addEduNote={this.addEduNote}
+              deleteEduNote={this.deleteEduNote}
               deleteEdu={this.deleteEdu}
               education={education}
             />
