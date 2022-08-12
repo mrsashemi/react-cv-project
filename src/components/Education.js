@@ -93,7 +93,7 @@ export class EducationInfo extends Component {
                 <div className="hidden" ref={this.props.hiddenEdu}>
                     <h4 className="inlineText">{education.college} / {education.degree} in {education.major} </h4> 
                     {education.minor !== '' && <h5 className="inlineText"> with minors in {education.minor}</h5>}
-                    <h6>{education.collegeStart} to {education.collegeEnd} / {education.collegeCity}</h6>
+                    <h6>{education.collegeStart} - {education.collegeEnd} / {education.collegeCity}</h6>
                     <ul>
                         {education.notes.map((note) => {
                             return <li key={note.id}>{note.text}</li>
@@ -103,9 +103,16 @@ export class EducationInfo extends Component {
                 {educations.map((education) => {
                     return (
                         <div key={education.id}>
-                            <h4 className="inlineText"><EditText id="educationCollege" defaultValue={education.college} inline />  / <EditText id="educationDegree" defaultValue={education.degree} inline />  in <EditText id="educationMajor" defaultValue={education.Major} inline />  </h4> 
-                            {education.minor !== '' && <h5 className="inlineText"> with minors in <EditText id="educationMinor" defaultValue={education.minor} inline /></h5>}
-                            <h6><EditText id="educationStart" defaultValue={education.collegeStart} inline /> to <EditText id="educationEnd" defaultValue={education.collegeEnd} inline /> / <EditText id="educationCity" defaultValue={education.collegeCity} inline /></h6>
+                            <h4 className="inlineText"><EditText id="educationCollege" defaultValue={education.college} inline /> /&nbsp;
+                            <EditText id="educationDegree" defaultValue={education.degree} inline /> in 
+                            <EditText id="educationMajor" defaultValue={education.Major} inline />  
+                            </h4> 
+                            {education.minor !== '' && <h5 className="inlineText"> with minors in 
+                            <EditText id="educationMinor" defaultValue={education.minor} inline /></h5>}
+                            <h6><EditText id="educationStart" defaultValue={education.collegeStart} inline /> -&nbsp;
+                            <EditText id="educationEnd" defaultValue={education.collegeEnd} inline /> /&nbsp;
+                            <EditText id="educationCity" defaultValue={education.collegeCity} inline />
+                            </h6>
                             <ul>
                                 {education.notes.map((note) => {
                                     return <li key={note.id}><EditText id="noteText" defaultValue={note.text} inline /></li>

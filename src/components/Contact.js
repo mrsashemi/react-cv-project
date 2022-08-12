@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import '../App.css'
 import { EditText } from 'react-edit-text';
-//import 'react-edit-text/dist/index.css';
+import 'react-edit-text/dist/index.css';
 
 export class ContactForm extends Component {
     render() {

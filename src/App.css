@@ -1,14 +1,24 @@
 .container {
   display: flex;
-  justify-content: flex-start;
-  gap: 20vmin;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  height: 96vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.resumeContainer {
+  box-sizing: border-box;
+  border: solid black 0.5vmin;
+  height: 96vh;
+  overflow: auto;
 }
 
 .generatedCV {
+  overflow: auto;
   padding: 0.5cm;
   width: 21cm;
   height: 29.7cm;
-  border: solid 0.2vmin black;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
@@ -21,8 +31,20 @@
   "Personal Education Education Education";
 }
 
+.CVForm {
+  width: 20vmin;
+}
+
+.sectionTitle {
+  color: white;
+  background-color: black;
+  padding-left: 0.25cm;
+}
+
 .personalInfo {
   grid-area: Personal;
+  background-color: rgba(144, 238, 144, 0.719);
+  padding: 0.1cm;
 }
 
 .experienceInfo {
@@ -31,6 +53,74 @@
 
 .educationInfo {
   grid-area: Education;
+}
+
+.objective,
+.experiencePoint > div,
+.educationPoint > div {
+  margin: 0.25cm 0 0.25cm 0;
+}
+
+.objective {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.educationInfo,
+.experienceInfo {
+  margin-left: 0.5cm;
+}
+
+
+form > input,
+form > button,
+form > textarea {
+  box-sizing: border-box;
+  width: 20vmin;
+  height: 2vmin;
+  margin: 0;
+  padding: 0;
+}
+
+form > input,
+form > textarea {
+  appearance: none;
+  border: 0.2vmin solid rgba(144, 238, 144, 0.719);
+  padding: 0.5vmin;
+  border-radius: 0.5vmin 0 0 0.5vmin;
+  outline: none;
+  color: gray;
+}
+
+
+form > textarea {
+  height: 10vmin;
+  margin-top: 0.25vmin;
+  margin-bottom: -0.25vmin;
+}
+
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: sans-serif;
+  cursor: pointer;
+  padding: 12px;
+  min-width: 100px;
+  border: 0px;
+  -webkit-transition: background-color 100ms linear;
+  -ms-transition: background-color 100ms linear;
+  transition: background-color 100ms linear;
+  background: #ededed;
+  color: #000;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:hover {
+  background: #dbdbdb;
+  color: #000;
 }
 
 .hidden {
@@ -59,22 +149,9 @@ ul {
 li {
   margin: 0;
   font-size: 11px;
+  font-weight: 500;
 }
 
-.objective,
-.experiencePoint > div,
-.educationPoint > div {
-  margin: 0.25cm 0 0.25cm 0;
-}
-
-.objective {
-  font-size: 11px;
-}
-
-.educationInfo,
-.experienceInfo {
-  margin-left: 0.5cm;
-}
 
 .inlineText {
   display: inline;

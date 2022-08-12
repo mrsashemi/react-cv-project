@@ -321,7 +321,6 @@ class App extends Component {
     let eduId;
 
     if (this.state.educations.length > 0) eduId = this.state.educations[this.state.educations.length - 1].id
-
     const filterEducations = this.state.educations.filter(edu => { return edu.id !== eduId })
 
     this.setState({
@@ -384,23 +383,25 @@ class App extends Component {
             />
           </div>
         </div>
-        <div className='generatedCV'>
-          <ContactInfo jobSeeker={jobSeeker} keywords={keywords}  />
-          <div className='experienceInfo'>
-            <h2>Experience</h2>
-            <ExperienceInfo 
-              experiences={experiences} 
-              experience={experience} 
-              hidden={this.hidden}
-            />
-          </div>
-          <div className='educationInfo'>
-            <h2>Education</h2>
-            <EducationInfo 
-              education={education}
-              educations={educations}
-              hiddenEdu={this.hiddenEdu}
-            />
+        <div className='resumeContainer'>
+          <div className='generatedCV' style={{overflowY: 'scroll'}}>
+            <ContactInfo jobSeeker={jobSeeker} keywords={keywords}  />
+            <div className='experienceInfo'>
+              <h2 className='sectionTitle'>Experience</h2>
+              <ExperienceInfo 
+                experiences={experiences} 
+                experience={experience} 
+                hidden={this.hidden}
+              />
+            </div>
+            <div className='educationInfo'>
+              <h2 className='sectionTitle'>Education</h2>
+              <EducationInfo 
+                education={education}
+                educations={educations}
+                hiddenEdu={this.hiddenEdu}
+              />
+            </div>
           </div>
         </div>
       </div>

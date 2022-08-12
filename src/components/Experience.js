@@ -86,8 +86,13 @@ export class ExperienceInfo extends Component {
                 {experiences.map((experience) => {
                     return (
                         <div key={experience.id}>
-                            <h4 className="inlineText"><EditText id="experienceCompany" defaultValue={experience.company} inline /> / <EditText id="experiencePosition" defaultValue={experience.position} inline /></h4><br></br>
-                            <h6 className="inlineText"><EditText id="experienceStart" defaultValue={experience.start} inline /> - <EditText id="experienceEnd" defaultValue={experience.end} inline /> / <EditText id="experienceCity" defaultValue={experience.city} inline /> </h6>
+                            <h4 className="inlineText"><EditText id="experienceCompany" defaultValue={experience.company} inline /> /&nbsp;
+                            <EditText id="experiencePosition" defaultValue={experience.position} inline />
+                            </h4><br></br>
+                            <h6 className="inlineText"><EditText id="experienceStart" defaultValue={experience.start} inline /> - 
+                            <EditText id="experienceEnd" defaultValue={experience.end} inline /> /&nbsp; 
+                            <EditText id="experienceCity" defaultValue={experience.city} inline />
+                            </h6>
                             <ul>
                                 {experience.bullets.map((bullet) => {
                                     return <li key={bullet.id}><EditText id="bulletText" defaultValue={bullet.text} inline /></li>
