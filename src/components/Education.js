@@ -75,7 +75,7 @@ export class EducationForm extends Component {
                     /><br></br>
 
                     <button onClick={this.props.addEduNote} type="button">Add Notable Achievements</button><br></br>
-                    <button onClick={this.props.deleteEduNote} type="button">Delete Last Note</button><br></br><br></br>
+                    <button onClick={this.props.deleteEduNote} type="button">Delete Last Note</button><br></br>
                     <button type="submit">Add Education</button><br></br>
                     <button onClick={this.props.deleteEdu} type="button">Delete Last Education</button><br></br>
                 </form>

@@ -59,7 +59,7 @@ export class ContactForm extends Component {
                     /><br></br>
 
                     <button onClick={this.props.addKeyword} type="button">Add Keyword</button><br></br>
-                    <button onClick={this.props.deleteKeyword} type="button">Delete Last Keyword</button><br></br><br></br>
+                    <button onClick={this.props.deleteKeyword} type="button">Delete Last Keyword</button><br></br>
                     <button type="submit">{contactText}</button>
                 </form>
             </div>

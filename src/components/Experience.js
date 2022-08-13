@@ -59,7 +59,7 @@ export class ExperienceForm extends Component {
                     /><br></br>
 
                     <button onClick={this.props.addBullet} type="button">Add Bullet Point</button><br></br>
-                    <button onClick={this.props.deleteBullet} type="button">Delete Last Bullet Point</button><br></br><br></br>
+                    <button onClick={this.props.deleteBullet} type="button">Delete Last Bullet Point</button><br></br>
                     <button type="submit">Add Experience</button><br></br>
                     <button onClick={this.props.deleteExp} type="button">Delete Last Experience</button>
                 </form>

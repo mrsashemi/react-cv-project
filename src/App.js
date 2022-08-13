@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { ExperienceForm, ExperienceInfo } from './components/Experience';
 import { EducationForm, EducationInfo } from './components/Education';
 import { ContactForm, ContactInfo } from './components/Contact';
+import ReactToPrint from 'react-to-print';
 import uniqid from "uniqid";
 
 class App extends Component {
@@ -60,7 +61,6 @@ class App extends Component {
 
   hidden = React.createRef();
   hiddenEdu = React.createRef();
-
   
   //Create handle functions to preview form values in the CV while typing
   handleChange = (e) => {
@@ -350,6 +350,7 @@ class App extends Component {
     return (
       <div className='container'>
         <div className='CVForm'>
+          <div className='resumeGenTitle'>Resume Generator</div>
           <div>
             <ContactForm 
               handleChange={this.handleChange} 
@@ -381,11 +382,21 @@ class App extends Component {
               deleteEdu={this.deleteEdu}
               education={education}
             />
-          </div>
+          </div><br></br>
+          <ReactToPrint
+            trigger={()=> {
+              return <button>Print Resume</button>
+            }}
+            content= {() => this.componentRef}
+            documentTitle='Resume'
+          />
         </div>
-        <div className='resumeContainer'>
-          <div className='generatedCV' style={{overflowY: 'scroll'}}>
-            <ContactInfo jobSeeker={jobSeeker} keywords={keywords}  />
+        <div className='resumeContainer' >
+          <div className='generatedCV' ref={el => (this.componentRef=el)}>
+            <ContactInfo 
+              jobSeeker={jobSeeker} 
+              keywords={keywords}  
+            />
             <div className='experienceInfo'>
               <h2 className='sectionTitle'>Experience</h2>
               <ExperienceInfo 
@@ -408,7 +419,6 @@ class App extends Component {
     );
   }
 }
-
-
-
 export default App;
+
+
