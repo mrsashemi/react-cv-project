@@ -4,19 +4,17 @@
   align-items: flex-start;
   height: 96vh;
   padding-bottom: 2vh;
-  border: solid 2vmin black;
 }
 
 .resumeContainer {
-  box-sizing: border-box;
-  height: 100vh;
+  margin-top: 1vmin;
+  height: 96vh;
   overflow: auto;
-  box-shadow: 12px 0 15px -4px gray, -12px 0 8px -4px gray;
+  border: solid 1vmin black;
 }
 
 .generatedCV {
-  border: solid black 0.5vmin;
-  overflow: auto;
+  overflow: scroll;
   padding: 0.5cm;
   width: 21cm;
   height: 29.7cm;
@@ -30,6 +28,20 @@
   "Personal Experience Experience Experience"
   "Personal Education Education Education"
   "Personal Education Education Education";
+}
+
+@media screen and (min-width: 1200px) {
+  .generatedCV {
+    width: 42cm;
+    height: 59.4cm;
+  }
+}
+
+@media screen and (max-width: 1999px) {
+  .generatedCV {
+    width: 21cm;
+    height: 29.7cm;
+  }
 }
 
 .CVForm {
