@@ -1,423 +1,272 @@
 import './App.css';
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import { ExperienceForm, ExperienceInfo } from './components/Experience';
 import { EducationForm, EducationInfo } from './components/Education';
 import { ContactForm, ContactInfo } from './components/Contact';
 import ReactToPrint from 'react-to-print';
 import uniqid from "uniqid";
 
-class App extends Component {
-  constructor() {
-    super();
+function App() {
+  const [onSubmitInfo, setSubmitInfo] = useState(true);
+  const [contactText, setContactText] = useState("Submit Personal Info");
 
-    this.state = {
-      onSubmitInfo: true,
-      contactText: "Submit Personal Info",
-      jobSeeker: {
-        firstName: '',
-        lastName: '',
-        address: '',
-        phone: '',
-        email: '',
-        objective: '',
-      },
-      keyword: {
-        text: '',
-        id: uniqid()
-      },
-      keywords: [],
-      experience: {
-        position: '',
-        company: '',
-        city: '',
-        start: '',
-        end: '',
-        id: uniqid(),
-        bullet: {
-          text: '',
-          id: uniqid()
-        },
-        bullets: []
-      },
-      experiences: [],
-      education: {
-        college: '',
-        collegeCity: '',
-        degree: '',
-        major: '',
-        minor: '',
-        collegeStart: '',
-        collegeEnd: '',
-        id: uniqid(),
-        note: {
-          text: '',
-          id: uniqid()
-        },
-        notes: []
-      },
-      educations: []
-    };
-  }
+  const [jobSeeker, setJobSeeeker] = useState({firstName: '', lastName: '', address: '', phone: '', email: '', objective: ''});
+  const firstName = jobSeeker.firstName;
+  const lastName = jobSeeker.lastName;
+  const address = jobSeeker.address;
+  const phone = jobSeeker.phone;
+  const email = jobSeeker.email;
+  const objective = jobSeeker.objective;
 
-  hidden = React.createRef();
-  hiddenEdu = React.createRef();
+  const [keyword, setKeyword] = useState({text: '', id: uniqid()});
+  const keywordId = keyword.id;
+  const [keywords, setKeywords] = useState([]);
+
+  const [experience, setExperience] = useState({position: '', company: '', city: '', start: '', end: '', id: uniqid(), bullet: { text: '', id: uniqid() }, bullets: []});
+  const bullet = experience.bullet;
+  const bullets = experience.bullets
+  const [experiences, setExperiences] = useState([]);
+
+  const [education, setEducation] = useState({college: '', collegeCity: '', degree: '', major: '', minor: '', collegeStart: '', collegeEnd: '', id: uniqid(), note: { text: '', id: uniqid() }, notes: []});
+  const note = education.note;
+  const notes = education.notes;
+  const [educations, setEducations] = useState([]);
+
+  const hidden = React.createRef();
+  const hiddenEdu = React.createRef();
+  const componentRef = useRef();
   
   //Create handle functions to preview form values in the CV while typing
-  handleChange = (e) => {
+  function handleChange(e) {
     const { name, value } = e.target;
-
-    if (this.state.onSubmitInfo) {
-      this.setState(prevState => ({
-        jobSeeker: {...prevState.jobSeeker, [name]: value},
-      }));
-    }
+    if (onSubmitInfo) setJobSeeeker(prevJobSeeker => { return {...prevJobSeeker, [name]: value} })
   };
 
-  handleExp = (e) => {
-    this.hidden.current.className = "active";
+  function handleExp(e) {
+    hidden.current.className = "active";
     const { name, value } = e.target;
 
-    this.setState(prevState => ({
-      experience: {...prevState.experience, [name]: value},
-    }));
+    setExperience(prevExperience => {
+      return {...prevExperience, [name]: value}
+    })
   };
 
-  handleEdu = (e) => {
-    this.hiddenEdu.current.className = "active";
+  function handleEdu(e) {
+    hiddenEdu.current.className = "active";
     const { name, value } = e.target;
 
-    this.setState(prevState => ({
-      education: {...prevState.education, [name]: value},
-    }));
+    setEducation(prevEducation => {
+      return {...prevEducation, [name]: value}
+    })
+  };
+
+  function handleKeywords(e) {
+    setKeyword(() => {
+      return {text: e.target.value, id: keywordId}
+    })
   }
 
-  handleKeywords = (e) => {
-    this.setState({
-      keyword: {
-          text: e.target.value,
-          id: this.state.keyword.id,
-      },
-    });
+  function handleBullets(e) {
+    setExperience(prevExperience => {
+      return {...prevExperience, bullet: { text: e.target.value, id: experience.bullet.id }}
+    })
   }
 
-  handleBullets = (e) => {
-    this.setState(prevState => ({
-      experience: {
-        ...prevState.experience, 
-        bullet: {
-          text: e.target.value,
-          id: this.state.experience.bullet.id,
-        }
-      },
-    }));
-  }
-
-  handleEduNotes = (e) => {
-    this.setState(prevState => ({
-      education: {
-        ...prevState.education, 
-        note: {
-          text: e.target.value,
-          id: this.state.education.note.id,
-        }
-      },
-    }));
+  function handleEduNotes(e) {
+    setEducation(prevEducation => {
+      return {...prevEducation, note: { text: e.target.value, id: education.note.id }}
+    })
   }
 
   //Create onsubmit functions to input form data into the CV
-  onSubmitContact = (e) => {
+  function onSubmitContact(e) {
     e.preventDefault();
-    if (this.state.onSubmitInfo) {
-      this.setState({
-        jobSeeker: {
-          firstName: this.state.jobSeeker.firstName,
-          lastName: this.state.jobSeeker.lastName,
-          address: this.state.jobSeeker.address,
-          phone: this.state.jobSeeker.phone,
-          email: this.state.jobSeeker.email,
-          objective: this.state.jobSeeker.objective,
-        },
-        onSubmitInfo: false,
-        contactText: "Edit Info"
-      });
-    } else if (!this.state.onSubmitInfo) {
-      this.setState({
-        jobSeeker: {
-          firstName: this.state.jobSeeker.firstName,
-          lastName: this.state.jobSeeker.lastName,
-          address: this.state.jobSeeker.address,
-          phone: this.state.jobSeeker.phone,
-          email: this.state.jobSeeker.email,
-          objective: this.state.jobSeeker.objective,
-        },
-        onSubmitInfo: true,
-        contactText: "Submit Personal Info"
-      });
+
+    if(onSubmitInfo) {
+      setJobSeeeker(() => {
+        return { firstName: firstName, lastName: lastName, address: address, phone: phone, email: email, objective: objective }
+      })
+
+      setSubmitInfo(() => false)
+      setContactText(() => "Edit Info")
+    } else {
+      setJobSeeeker(() => {
+        return { firstName: firstName, lastName: lastName, address: address, phone: phone, email: email, objective: objective }
+      })
+
+      setSubmitInfo(() => true)
+      setContactText(() => "Submit Personal Info")
     }
   };
 
-  onSubmitExp = (e) => {
+  function onSubmitExp(e) {
     e.preventDefault();
-    this.hidden.current.className = "hidden";
-    this.setState({
-      experiences: this.state.experiences.concat(this.state.experience),
-      experience: {
-        position: '',
-        company: '',
-        city: '',
-        start: '',
-        end: '',
-        id: uniqid(),
-        bullet: {
-          text: '',
-          id: uniqid()
-        },
-        bullets: []
-      },
-    });
+    hidden.current.className = "hidden";
+
+    setExperiences(() => experiences.concat(experience));
+    setExperience(() => {
+      return { position: '', company: '', city: '', start: '', end: '', id: uniqid(), bullet: { text: '', id: uniqid() }, bullets: [] }
+    })
   };
 
-  onSubmitEdu = (e) => {
+  function onSubmitEdu(e) {
     e.preventDefault();
-    this.hiddenEdu.current.className = "hidden";
-    this.setState({
-      educations: this.state.educations.concat(this.state.education),
-      education: {
-        college: '',
-        collegeCity: '',
-        degree: '',
-        major: '',
-        minor: '',
-        collegeStart: '',
-        collegeEnd: '',
-        id: uniqid(),
-        note: {
-          text: '',
-          id: uniqid()
-        },
-        notes: []
-      },
-    });
+    hiddenEdu.current.className = "hidden";
+
+    setEducations(() => educations.concat(education));
+    setEducation(() => {
+      return { college: '', collegeCity: '', degree: '', major: '', minor: '', collegeStart: '', collegeEnd: '', id: uniqid(), note: { text: '', id: uniqid() }, notes: [] }
+    })
   };
 
   //Create add functions to add bullet points to the CV 
-  addKeyword = () => {
-    this.setState({
-      keywords: this.state.keywords.concat(this.state.keyword),
-      keyword: {
-          text: '',
-          id: uniqid()
-      },
-    });
+  function addKeyword() {
+    setKeywords(() => keywords.concat(keyword));
+    setKeyword(() => {
+      return { text: '', id: uniqid() }
+    })
   };
 
-  addBullet = () => {
-    this.hidden.current.className = "active";
-    this.setState(prevState => ({
-      experience: {
-        ...prevState.experience,
-        bullets: this.state.experience.bullets.concat(this.state.experience.bullet),
-        bullet: {
-          text: '',
-          id: uniqid()
-        }
-      }
-    }));
+  function addBullet() {
+    hidden.current.className = "active";
+
+    setExperience(prevExperience => {
+      return {...prevExperience, bullets: bullets.concat(bullet), bullet: { text: '', id: uniqid() }}
+    })
   };
 
-  addEduNote = () => {
-    this.hiddenEdu.current.className = "active";
-    this.setState(prevState => ({
-      education: {
-        ...prevState.education,
-        notes: this.state.education.notes.concat(this.state.education.note),
-        note: {
-          text: '',
-          id: uniqid()
-        }
-      }
-    }));
+  function addEduNote() {
+    hiddenEdu.current.className = "active";
+
+    setEducation(prevEducation => {
+      return {...prevEducation, notes: notes.concat(note), note: { text: '', id: uniqid() }}
+    })
   };
 
   //Add delete functionality to remove bullet points or components from various CV sections
-  deleteKeyword = () => {
+  function deleteKeyword() {
     let keyId;
+    if (keywords.length > 0) keyId = keywords[keywords.length - 1].id;
+    const filterKeywords = keywords.filter(k => { return k.id !== keyId });
 
-    if (this.state.keywords.length > 0) keyId = this.state.keywords[this.state.keywords.length - 1].id;
-    const filterKeywords = this.state.keywords.filter(k => { return k.id !== keyId });
-
-    this.setState({
-      keywords: [...filterKeywords],
-      keyword: {
-          text: '',
-          id: uniqid()
-      },
-    });
+    setKeywords(() => [...filterKeywords]);
+    setKeyword(() => {
+      return { text: '', id: uniqid() }
+    })
   }
 
-  deleteBullet = () => {
+  function deleteBullet() {
     let bulletId;
+    if (bullets.length > 0) bulletId = bullets[bullets.length - 1].id;
+    const filterBullets = bullets.filter(b => { return b.id !== bulletId});
 
-    if (this.state.experience.bullets.length > 0) bulletId = this.state.experience.bullets[this.state.experience.bullets.length - 1].id;
-    const filterBullets = this.state.experience.bullets.filter(b => { return b.id !== bulletId});
-
-    this.setState(prevState => ({
-      experience: {
-        ...prevState.experience,
-        bullets: [...filterBullets],
-        bullet: {
-          text: '',
-          id: uniqid()
-        }
-      }
-    }));
+    setExperience(prevExperience => {
+      return {...prevExperience, bullets: [...filterBullets], bullet: { text: '', id: uniqid() }}
+    })
   }
 
-  deleteEduNote = () => {
+  function deleteEduNote() {
     let noteId;
+    if (notes.length > 0) noteId = notes[notes.length - 1].id;
+    const filterNotes = notes.filter(n => { return n.id !== noteId });
 
-    if (this.state.education.notes.length > 0) noteId = this.state.education.notes[this.state.education.notes.length - 1].id;
-    const filterNotes = this.state.education.notes.filter(n => { return n.id !== noteId });
-
-    this.setState(prevState => ({
-      education: {
-        ...prevState.education,
-        notes: [...filterNotes],
-        note: {
-          text: '',
-          id: uniqid()
-        }
-      }
-    }));
+    setEducation(prevEducation => {
+      return {...prevEducation, notes: [...filterNotes], note: { text: '', id: uniqid() }}
+    })
   }
 
-  deleteExp = (e) => {
+  function deleteExp(e) {
     e.preventDefault();
     let expId;
+    if (experiences.length > 0) expId = experiences[experiences.length - 1].id
+    const filterExperiences = experiences.filter(exp => { return exp.id !== expId })
 
-    if (this.state.experiences.length > 0) expId = this.state.experiences[this.state.experiences.length - 1].id
-    const filterExperiences = this.state.experiences.filter(exp => { return exp.id !== expId })
-
-    this.setState({
-      experiences: [...filterExperiences],
-      experience: {
-        position: '',
-        company: '',
-        city: '',
-        start: '',
-        end: '',
-        id: uniqid(),
-        bullet: {
-          text: '',
-          id: uniqid()
-        },
-        bullets: []
-      },
-    });
+    setExperiences(() => [...filterExperiences]);
+    setExperience(() => {
+      return { position: '', company: '', city: '', start: '', end: '', id: uniqid(), bullet: { text: '', id: uniqid() }, bullets: [] }
+    })
   }
 
-  deleteEdu = (e) => {
+  function deleteEdu(e) {
     e.preventDefault();
     let eduId;
+    if (educations.length > 0) eduId = educations[educations.length - 1].id
+    const filterEducations = educations.filter(edu => { return edu.id !== eduId })
 
-    if (this.state.educations.length > 0) eduId = this.state.educations[this.state.educations.length - 1].id
-    const filterEducations = this.state.educations.filter(edu => { return edu.id !== eduId })
-
-    this.setState({
-      educations: [...filterEducations],
-      education: {
-        college: '',
-        collegeCity: '',
-        degree: '',
-        major: '',
-        minor: '',
-        collegeStart: '',
-        collegeEnd: '',
-        id: uniqid(),
-        note: {
-          text: '',
-          id: uniqid()
-        },
-        notes: []
-      },
-    });
+    setEducations(() => [...filterEducations]);
+    setEducation(() => {
+      return { college: '', collegeCity: '', degree: '', major: '', minor: '', collegeStart: '', collegeEnd: '', id: uniqid(), note: { text: '', id: uniqid() }, notes: [] }
+    })
   }
 
-
-  render() {
-    const { jobSeeker, keyword, keywords, experiences, experience, contactText, education, educations } = this.state;
-
-    return (
-      <div className='container'>
-        <div className='CVForm'>
-          <div className='resumeGenTitle'>Resume Generator</div>
-          <div>
-            <ContactForm 
-              handleChange={this.handleChange} 
-              handleKeywords={this.handleKeywords} 
-              onSubmitContact={this.onSubmitContact}
-              addKeyword={this.addKeyword} 
-              deleteKeyword={this.deleteKeyword}
-              jobSeeker={jobSeeker} 
-              keyword={keyword}
-              contactText={contactText}
-            />
-            <ExperienceForm 
-              handleExp={this.handleExp} 
-              handleBullets={this.handleBullets}
-              addBullet={this.addBullet}
-              deleteBullet={this.deleteBullet}
-              onSubmitExp={this.onSubmitExp}
-              deleteExp={this.deleteExp}
-              showBulletEdit={this.showBulletEdit}
-              experience={experience}
-              experiences={experiences} 
-            />
-            <EducationForm
-              handleEdu={this.handleEdu}
-              onSubmitEdu={this.onSubmitEdu}
-              handleEduNotes={this.handleEduNotes}
-              addEduNote={this.addEduNote}
-              deleteEduNote={this.deleteEduNote}
-              deleteEdu={this.deleteEdu}
-              education={education}
-            />
-          </div><br></br>
-          <ReactToPrint
-            trigger={()=> {
-              return <button>Print Resume</button>
-            }}
-            content= {() => this.componentRef}
-            documentTitle='Resume'
+  return (
+    <div className='container'>
+      <div className='CVForm'>
+        <div className='resumeGenTitle'>Resume Generator</div>
+        <div>
+          <ContactForm 
+            handleChange={handleChange} 
+            handleKeywords={handleKeywords} 
+            onSubmitContact={onSubmitContact}
+            addKeyword={addKeyword} 
+            deleteKeyword={deleteKeyword}
+            jobSeeker={jobSeeker} 
+            keyword={keyword}
+            contactText={contactText}
           />
-        </div>
-        <div className='resumeContainer' >
-          <div className='generatedCV' ref={el => (this.componentRef=el)}>
-            <ContactInfo 
-              jobSeeker={jobSeeker} 
-              keywords={keywords}  
+          <ExperienceForm 
+            handleExp={handleExp} 
+            handleBullets={handleBullets}
+            addBullet={addBullet}
+            deleteBullet={deleteBullet}
+            onSubmitExp={onSubmitExp}
+            deleteExp={deleteExp}
+            experience={experience}
+            experiences={experiences} 
+          />
+          <EducationForm
+            handleEdu={handleEdu}
+            onSubmitEdu={onSubmitEdu}
+            handleEduNotes={handleEduNotes}
+            addEduNote={addEduNote}
+            deleteEduNote={deleteEduNote}
+            deleteEdu={deleteEdu}
+            education={education}
+          />
+        </div><br></br>
+        <ReactToPrint
+          trigger={()=> {
+            return <button>Print Resume</button>
+          }}
+          content= {() => componentRef.current}
+        />
+      </div>
+      <div className='resumeContainer' >
+        <div className='generatedCV' ref={componentRef}>
+          <ContactInfo 
+            jobSeeker={jobSeeker} 
+            keywords={keywords}  
+          />
+          <div className='experienceInfo'>
+            <h2 className='sectionTitle'>Experience</h2>
+            <ExperienceInfo 
+              experiences={experiences} 
+              experience={experience} 
+              hidden={hidden}
             />
-            <div className='experienceInfo'>
-              <h2 className='sectionTitle'>Experience</h2>
-              <ExperienceInfo 
-                experiences={experiences} 
-                experience={experience} 
-                hidden={this.hidden}
-              />
-            </div>
-            <div className='educationInfo'>
-              <h2 className='sectionTitle'>Education</h2>
-              <EducationInfo 
-                education={education}
-                educations={educations}
-                hiddenEdu={this.hiddenEdu}
-              />
-            </div>
+          </div>
+          <div className='educationInfo'>
+            <h2 className='sectionTitle'>Education</h2>
+            <EducationInfo 
+              education={education}
+              educations={educations}
+              hiddenEdu={hiddenEdu}
+            />
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 export default App;
 
