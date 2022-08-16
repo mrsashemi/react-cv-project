@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+**Introduction**
+The goal of this project is to act as an introduction to React building a resume generator. I created the first iteration of this project exclusively with class components. There is another iteration in the functionalCompCV branch that is created completely with functional components. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Functionality**
+This app is a simple resume generator. There is a form on the rightside and a resume that updates in real time as you fill out the form. 
+The form has 3 sections- Personal Information(Contact), Experience, and Education. 
 
-## Available Scripts
+The personal information portion also includes a section for keywords that are filled out as bullets on the resume. There is an option to add and delete keywords. Upon submitting the info, the form locks and you are unable to further edit the personal information portion, unless you click the newly generated "edit info" button.
 
-In the project directory, you can run:
+The education and experience portions are similar in functionality. You are able to add as much experience/education as needed. For each experience/education, there is an option to add a bullet/note. This functions similarily in that you can add or delete bullet points as needed. Upon completing an experience/education, you can then add it to the generated resume. The CV at this point can actually be edited live, so there is not an edit button for experience/education. Instead, theres an option to delete the last created education/experience.
 
-### `npm start`
+Once the resume is filled out as desired, there is an option to print it (or save to PDF via the browser).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Process**
+Since this is my first project with react, I wasn't entirely sure of the best approach when starting. I built the app using 7 components. With vanilla JS projects, I generally start by creating a skeleton in HTML. Similarily with this project, my first instinct was to build out the structure of the page in App.js, and then fill the appropriate sections with the other components.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Upon creating the structure, I created 3 other files holding two components each for the contact, experience, and education portions of the CV. Each file has a component for the form values and a component that fills out the displayed resume as you enter information into the form. Since the structure of the app is seperate than that of the generated resume, I found that the forms themselves could not hold State and pass props down to the paired component that generates the form values to the resume. In hindsight, I could probably have made use of the Context API, however, that is out of the scope of this project, so instead I needed to lift state up to the App component. 
 
-### `npm test`
+Once the appropriate forms were built, the first step was to see if I can have the forms fill out the resume live. To accomplish this, I created various handleChange functions in the App component and passed them down to the form components. Once that was functioning, I then created setState functions to submit the form info and actually append the filled out information it to the generated resume. In addition to the submit functions, I created addKeyword/Bullet/Note function for each section on the form that are seperate from the submit functions. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once the resume could reasonably be filled out, I took a brief pause from working on the JS and adjusted the styles to ensure the formatting was correct on the generated resume. 
 
-### `npm run build`
+Now the next step was to build out functionality to ensure the resume could be edited or different sections could be deleted. I imported a node package called "react-edit-text" which allows the user to click on text to transform it into an editable textbox. This worked great for section titles/dates/etc but not so much for the bullet points, so I then created a handful of delete functions to pair with the add functions. I also expanded these delete functions to include the actual generated experience/education, so the user could delete an entire section if desired. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+As far as how all these submit/add/delete functions work... the state includes arrays that concat the different portions upon adding a keyword or submitting info for example. In addition, each keyword/bullet/experience/etc include a unique id that is generated by the uniqid node package and is mapped to the different divs/list items that hold them in the appropriate component. To delete the last generated section, I take the array, find the id of the last item in the array, and filter it out of the list. I then set the state to the filtered array. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The last JS step was to add print functionality, which was done with the react-to-print node package. After which, I completed the page styles.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+That's essentially the process for the creating the app. The section iteration which can be viewed in the functionalCompCV branch, is a version of this app where each class component was refactored into a functional component. 
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Conclusion**
+The first react project was honestly quite difficult! Not necessarily because it was any harder to code than normal JS, but because the workflow was a little foreign to me. I found myself lifting state up throughout the project, and researching other methods to acheive the desired results. The project may not be perfect, but will serve as reference to me for where I can imporve. Next steps from here are to continue practicing react and learning new ways to make the next app cleaner. 
